@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <!-- Css -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <% if(code != null && code == 500) { %>
+        <div class="alert danger">
+            <%= message %>
+        </div>
+        <% } %>
+
+        <% if(code != null && code == 404) { %>
+        <div class="alert warning">
+            <%= message %>
+        </div>
+        <% } %>
+
+        <form action="" method="POST">
+            <input type="text" name="city" placeholder="Masukan Nama Kota" required>
+            <button type="submit">cari</button>
+        </form>
+
+        <% if(data != null && code == 200) { %>
+        <div class="data">
+            <span><%= data.name %></span>
+            <span><%= Math.round(data.main.temp - 273.15) %>&#8451;</span>
+        </div>
+        <% } %>
+
+    </div>
+</body>
+</html>
