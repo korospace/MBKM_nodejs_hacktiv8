@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { Photos,Users } = require("../models");
 
 class PhotosController{
@@ -6,7 +7,10 @@ class PhotosController{
             include: Users
         })
             .then(result => {
-                res.status(200).json(result);
+                res.status(200).json({
+                    error: false,
+                    data: result
+                });
             })
             .catch(err => {
                 res.status(500).json(err);
@@ -18,7 +22,19 @@ class PhotosController{
 
         Photos.findByPk(id)
             .then(result => {
-                res.status(200).json(result);
+                if (!result) {
+                    res.status(404).json({
+                        error: true,
+                        code: 404,
+                        message: "photo not found"
+                    });
+                }
+
+                res.status(200).json({
+                    error: false,
+                    code: 200,
+                    data: result
+                });
             })
             .catch(err => {
                 res.status(500).json(err);
@@ -26,11 +42,28 @@ class PhotosController{
     }
 
     static createPhoto(req,res){
-        let {title,caption,image_url} = req.body;
+        const errors = validationResult(req);
 
-        Photos.create({title,caption,image_url})
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                error: true,
+                code: 400,
+                message: "bad request",
+                errors: errors.mapped()
+            });
+        }
+
+        let {title,caption,image_url} = req.body;
+        let userData = res.locals.user;
+
+        Photos.create({title,caption,image_url,UserId:userData.id})
             .then(result => {
-                res.status(201).json(result);
+                res.status(201).json({
+                    error: false,
+                    code: 201,
+                    message: "new photo created",
+                    data: result
+                });
             })
             .catch(err => {
                 res.status(500).json(err);

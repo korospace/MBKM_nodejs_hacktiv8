@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Photos',[{
-      UserId:1,
+      UserId:5,
       title:"gambar 1",
       caption:"ini gambar 1",
       image_url:"https://images.unsplash.com/photo-1664575196079-9ac04582854b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
@@ -12,7 +12,7 @@ module.exports = {
       updatedAt: new Date(),
     },
     {
-      UserId:1,
+      UserId:5,
       title:"gambar 2",
       caption:"ini gambar 2",
       image_url:"https://images.unsplash.com/photo-1664730302624-3cba2a181006?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
